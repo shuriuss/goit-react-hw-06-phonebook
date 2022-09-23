@@ -12,10 +12,10 @@ import s from './App.module.css';
 export function App() {
   return (
     <section className={s.section}>
-      <h1>Phonbook</h1>
+      <h1>Phonebook</h1>
       <Form />
       <h2>Contacts</h2>
-      {/* <Filter /> */}
+      <Filter />
       <ContactList />
     </section>
   );

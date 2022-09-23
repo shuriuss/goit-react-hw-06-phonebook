@@ -3,12 +3,11 @@ import s from './Form.module.css';
 
 import { addContact } from '../../redux/contactSlice';
 import { useDispatch } from 'react-redux';
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 import { getContacts } from 'redux/selectors';
 
-
 function Form() {
-  const contacts = useSelector(getContacts)
+  const contacts = useSelector(getContacts);
 
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
@@ -44,34 +43,14 @@ function Form() {
     if (number.length === 0) {
       return;
     }
-    
+
     if (contacts.some(el => el.name === name)) {
-   
-          alert(` ${name} is already in contacts`);
-          return;
-        }
-    
+      alert(` ${name} is already in contacts`);
+      return;
+    }
 
     dispatch(addContact(name, number));
   };
-
-  // const handleSubmit = e => {
-  //   e.preventDefault();
-  //   if (name.length === 0) {
-  //     return;
-  //   }
-  //   if (number.length === 0) {
-  //     return;
-  //   }
-
-  //   const newItem = {
-  //     id: Date.now(),
-  //     name,
-  //     number,
-  //   };
-
-  //   onSubmit(newItem);
-  // };
 
   return (
     <>

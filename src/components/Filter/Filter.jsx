@@ -1,17 +1,33 @@
 import PropTypes from 'prop-types'
 import s from './Filter.module.css'
 
+import {search} from '../../redux/filterSlice'
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { getFilter } from 'redux/selectors';
 
 
-function Filter (props) {
-  const {onChange, value} = props
+function Filter () {
+
+const filter = useSelector(getFilter)
+
+const dispatch = useDispatch()
+
+
+const handleChange = e => {
+  dispatch(search(e.target.value.toLowerCase()))
+  
+}
+
+  
       return (
 <>
 <div className={s.filter}>
   <h3 className={s.title}>Find contacts by name</h3>
   <input
-    onChange={onChange}
-    value = {value}
+  name='filter'
+    onChange={handleChange}
+    value = {filter.value}
     className={s.input}
   />
   </div>
@@ -21,8 +37,8 @@ function Filter (props) {
   }
 
   Filter.propTypes = {
-    onChange: PropTypes.func.isRequired,
-    value: PropTypes.string.isRequired,
+    handleChange: PropTypes.func,
+    value: PropTypes.string,
   }
 
 

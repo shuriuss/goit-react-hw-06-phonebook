@@ -1,9 +1,19 @@
 import React, { useState } from 'react';
 import s from './Form.module.css';
 
-function Form({ onSubmit }) {
+import { addContact } from '../../redux/contactSlice';
+import { useDispatch } from 'react-redux';
+import { useSelector } from "react-redux";
+import { getContacts } from 'redux/selectors';
+
+
+function Form() {
+  const contacts = useSelector(getContacts)
+
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+
+  const dispatch = useDispatch();
 
   const handleChange = e => {
     const { name } = e.currentTarget;
@@ -25,21 +35,44 @@ function Form({ onSubmit }) {
 
   const handleSubmit = e => {
     e.preventDefault();
+    const name = e.target.elements.name.value;
+    const number = e.target.elements.number.value;
+
     if (name.length === 0) {
       return;
     }
     if (number.length === 0) {
       return;
     }
+    
+    if (contacts.some(el => el.name === name)) {
+   
+          alert(` ${name} is already in contacts`);
+          return;
+        }
+    
 
-    const newItem = {
-      id: Date.now(),
-      name,
-      number,
-    };
-
-    onSubmit(newItem);
+    dispatch(addContact(name, number));
   };
+
+  // const handleSubmit = e => {
+  //   e.preventDefault();
+  //   if (name.length === 0) {
+  //     return;
+  //   }
+  //   if (number.length === 0) {
+  //     return;
+  //   }
+
+  //   const newItem = {
+  //     id: Date.now(),
+  //     name,
+  //     number,
+  //   };
+
+  //   onSubmit(newItem);
+  // };
+
   return (
     <>
       <h2 className={s.title}>Name</h2>
